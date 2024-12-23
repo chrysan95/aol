@@ -1,52 +1,69 @@
 #include <stdio.h>
 
-typedef struct menuPrice{
+// Structs
+// Struct untuk menyimpan menu
+typedef struct menuPaket{
     int paket;
-    char desc [10000];
+    char desc[1000];
     int harga;
 } mp;
 
+// Struct untuk menyimpan orderan
 typedef struct orderItem{
     int paket;
     int harga;
 } oi;
 
-int readMenuFile(){
-    mp menu[100];
-    FILE *f1;
-    f1 = fopen("menu.txt","r");
-    int i = 1;
-    while(!feof(f1)){
-        fscanf(f1,"%d %[^-] %d\n", &menu[i].paket, menu[i].desc, &menu[i].harga);
+// Functions
+// Function untuk membaca file menu
+int readMenuFile(mp menu[]) {
+    FILE *f1 = fopen("menu.txt", "r");
+    if(f1 == NULL){
+        printf("File menu.txt tidak ditemukan\n");
+        return -1;
     }
+    
+    int i = 0;
+    while(fscanf(f1, "%d %s %d", &menu[i].paket, menu[i].desc, &menu[i].harga) != EOF) {
+        i++;
+    }
+
     fclose(f1);
+    return i; // return jumlah menu
 }
 
-void processOrderFile(mp menu[], int menuSize){
+void processOrderFile(mp menu[], int menuSize) {
     oi order[100];
     int total = 0;
     int howManyOrders = 0;
-    FILE *f2;
-    f2 = fopen("order.txt","r");
+    FILE *f2 = fopen("order.txt","r");
+    if(f2 == NULL) {
+        printf("File order.txt tidak ditemukan\n");
+        return -1;
+    }
     
     printf("Paket mana yang anda inginkan? ");
 
-    for(int i = 1; i <= menuSize; i++){
+    for(int i = 0; i < menuSize; i++) {
         printf("Paket Hemato %d\nDesc: %s\nHarga: %d\n", menu[i].paket, menu[i].desc, menu[i].harga);
     }    
 
-    // TODO!
+    // TODO: Process orders from the file, update orders, and calculate total
 
+    fclose(f2);
 }
 
 void writeOrderFile(oi order[], int numOrders, int total){
-    FILE *f2;
-    f2 = fopen("order.txt","a");
+    FILE *f2 = fopen("order.txt","a");
+    if(f2 == NULL) {
+        printf("File order.txt tidak ditemukan\n");
+        return -1;
+    }
+    
+    // TODO: Write orders to file
 
-    // TODO!
+    fclose(f2);
 }
-
-
 
 int main(){
     mp menu[100];
@@ -68,8 +85,3 @@ int main(){
     
     return 0;
 }
-
-
-
-
-
