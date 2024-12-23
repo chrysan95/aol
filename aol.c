@@ -39,7 +39,6 @@ void processOrderFile(mp menu[], int menuSize) {
     FILE *f2 = fopen("order.txt","r");
     if(f2 == NULL) {
         printf("File order.txt tidak ditemukan\n");
-        return -1;
     }
     
     printf("Paket mana yang anda inginkan? ");
@@ -57,7 +56,6 @@ void writeOrderFile(oi order[], int numOrders, int total){
     FILE *f2 = fopen("order.txt","a");
     if(f2 == NULL) {
         printf("File order.txt tidak ditemukan\n");
-        return -1;
     }
     
     // TODO: Write orders to file
